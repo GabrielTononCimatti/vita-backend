@@ -2,9 +2,9 @@
 node_modules/
 pages/
 src/config/serviceAccountKey.json
-src/config/json/
+src/json/
 .env
 documentation.html
-EndPoint.txt
+EndPoints.txt
 Notas.txt
 teste.html
