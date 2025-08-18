@@ -1,0 +1,10 @@
+.idea/
+node_modules/
+pages/
+src/config/serviceAccountKey.json
+src/config/json/
+.env
+documentation.html
+EndPoint.txt
+Notas.txt
+teste.html
