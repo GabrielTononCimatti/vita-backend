@@ -12,7 +12,7 @@ export const validateUser = (user) =>
         throw new Error("Valor inválido para 'tipo_usuario'. Deve ser 'C', 'F' ou 'A'.");
 }
 
-export const retrieveUserData = async (id) =>
+export const retrieveUser = async (id) =>
 {
     let resultado;
     try
@@ -30,4 +30,19 @@ export const retrieveUserData = async (id) =>
     }
 
     return {id: resultado.id, ...resultado.data()};
+}
+
+export const saveUser = async (user) =>
+{
+    if(!user)
+        throw new Error("Dados não recebidos. Objeto user vazio.");
+
+    try
+    {
+        await db.collection('usuarios').add({...user, criadoEm: new Date().toISOString()});
+    }
+    catch(error)
+    {
+        throw error;
+    }
 }

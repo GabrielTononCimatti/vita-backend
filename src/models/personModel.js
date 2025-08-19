@@ -25,7 +25,7 @@ export const validatePerson = (person) =>
     }
 }
 
-export const retrievePersonData = async (id) =>
+export const retrievePerson = async (id) =>
 {
     let resultado;
     try
@@ -39,8 +39,23 @@ export const retrievePersonData = async (id) =>
 
     if (!resultado.exists)
     {
-        throw new Error('Usuário não encontrado na base de dados.');
+        throw new Error('Pessoa não encontrada na base de dados.');
     }
 
     return {id: resultado.id, ...resultado.data()};
+}
+
+export const savePerson = async (person) =>
+{
+    if(!person)
+        throw new Error("Dados não recebidos. Objeto person vazio.");
+
+    try
+    {
+        await db.collection('pessoas').add({...person, criadoEm: new Date().toISOString()});
+    }
+    catch(error)
+    {
+        throw error;
+    }
 }
