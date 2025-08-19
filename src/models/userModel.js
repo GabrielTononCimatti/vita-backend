@@ -1,3 +1,5 @@
+import {db} from "../config/firebaseConfig.js";
+
 export const validateUser = (user) =>
 {
     if(!user)
@@ -8,4 +10,24 @@ export const validateUser = (user) =>
 
     if (typeof user.tipo_usuario !== 'string' || !['C', 'F', 'A'].includes(user.tipo_usuario))
         throw new Error("Valor inválido para 'tipo_usuario'. Deve ser 'C', 'F' ou 'A'.");
+}
+
+export const retrieveUserData = async (id) =>
+{
+    let resultado;
+    try
+    {
+        resultado = await db.collection('usuarios').doc(id).get();
+    }
+    catch (error)
+    {
+        throw error;
+    }
+
+    if (!resultado.exists)
+    {
+        throw new Error('Usuário não encontrado na base de dados.');
+    }
+
+    return {id: resultado.id, ...resultado.data()};
 }

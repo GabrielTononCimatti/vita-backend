@@ -1,4 +1,4 @@
-import {auth, db} from "../config/firebaseConfig.js";
+import {db} from "../config/firebaseConfig.js";
 
 export const validatePerson = (person) =>
 {
