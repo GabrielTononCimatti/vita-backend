@@ -1,6 +1,16 @@
 import {auth, db} from '../config/firebaseConfig.js';
 import {validateUser} from "../models/userModel.js";
 
+export const getUser = async (req, res) =>
+{
+
+};
+
+export const getUserById = async (req, res) =>
+{
+
+}
+
 export const postUser = async (req, res) =>
 {
     const user = req.body;
@@ -22,6 +32,7 @@ export const postUser = async (req, res) =>
             criadoEm: new Date().toISOString(),
             criadoPor: createdBy.id
         });
+
         return res.status(201).send({message: `Usuário criado com sucesso com o ID: ${docRef.id}`});
     }
     catch (error)
@@ -29,9 +40,49 @@ export const postUser = async (req, res) =>
         console.error("Erro ao criar usuário: ", error);
         return res.status(500).send({ message: "Ocorreu um erro ao criar o usuário.", error});
     }
+
+    try
+    {
+
+        await db.collection('pessoas').add({
+            ...user,
+            criadoEm: new Date().toISOString(),
+            criadoPor: createdBy.id
+        });
+
+    }
+    catch (error)
+    {
+        console.error("Erro ao criar usuário: ", error);
+        return res.status(500).send({ message: "Ocorreu um erro ao criar o usuário.", error});
+    }
+
 };
 
-export const completeRegistration = async (req, res) =>{
+export const putUser = async (req, res) =>
+{
+
+};
+
+export const patchUser = async (req, res) =>
+{
+
+};
+
+export const deleteUser = async (req, res) =>
+{
+
+};
+
+export const deleteUserById = async (req, res) =>
+{
+
+};
+
+
+
+
+/*export const completeRegistration = async (req, res) =>{
     const {email, password, pessoaId, tipo_usuario} = req.body;
     try {
         const pessoaDoc = await db.collection('pessoas').doc(pessoaId).get();
@@ -66,4 +117,4 @@ export const completeRegistration = async (req, res) =>{
         return res.status(500).send({ message: 'Ocorreu um erro no servidor.' });
     }
 
-};
+};*/

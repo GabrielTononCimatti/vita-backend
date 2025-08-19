@@ -1,22 +1,38 @@
-/*
-router.get
+import {db} from '../config/firebaseConfig.js';
+import {retrieveDocumentData, validateDocument} from "../models/documentModel.js";
+import {snapshotToArray} from '../utils/dbUtils.js';
 
-//GET by id
-router.get
+export const getDocument = async (req, res) =>
+{
 
+};
 
-router.post('/',documentController);
+export const getDocumentById = async (req, res) =>
+{
 
-router.put
-router.patch
-
-//DELETE all
-router.delete
-
-//DELETE by id
-router.delete
+}
 
 export const postDocument = async (req, res) =>
 {
 
-}*/
+};
+
+export const putDocument = async (req, res) =>
+{
+
+};
+
+export const patchDocument = async (req, res) =>
+{
+
+};
+
+export const deleteDocument = async (req, res) =>
+{
+
+};
+
+export const deleteDocumentById = async (req, res) =>
+{
+
+};
