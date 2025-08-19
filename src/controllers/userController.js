@@ -1,5 +1,5 @@
 import {auth, db} from '../config/firebaseConfig.js';
-import {validateUser} from "../models/userModel.js";
+import {validateUser, saveUser} from "../models/userModel.js";
 
 export const getUser = async (req, res) =>
 {
@@ -18,6 +18,7 @@ export const postUser = async (req, res) =>
     try
     {
         validateUser(user);
+        saveUser(user);
     }
     catch(error)
     {
@@ -25,22 +26,7 @@ export const postUser = async (req, res) =>
         return res.status(400).send({message:error.message});
     }
 
-    try
-    {
-        const docRef = await db.collection('usuarios').add({
-            ...user,
-            criadoEm: new Date().toISOString(),
-            criadoPor: createdBy.id
-        });
-
-        return res.status(201).send({message: `Usuário criado com sucesso com o ID: ${docRef.id}`});
-    }
-    catch (error)
-    {
-        console.error("Erro ao criar usuário: ", error);
-        return res.status(500).send({ message: "Ocorreu um erro ao criar o usuário.", error});
-    }
-
+    return res.status(201).send({message: `Usuário criado com sucesso com o ID: ${docRef.id}`});
     try
     {
 
