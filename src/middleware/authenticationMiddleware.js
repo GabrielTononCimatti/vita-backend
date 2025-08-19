@@ -1,14 +1,15 @@
-import {getUserData} from "../utils/dbUtils.js";
+import {tokenToId} from "../utils/dbUtils.js";
+import {retrieveUserData} from "../models/userModel.js";
 
-export const isAdmin = async (req, res, next) =>
+export const checkPermission = async (req, res, next) =>
 {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
-    if (!idToken)
-        return res.status(401).send({ message: 'Unauthorized. Nenhum token fornecido.' });
-    let userData;
+    let id, userData, token;
+    token = req.headers.authorization?.split('Bearer ')[1];
+    id = tokenToId(token);
+
     try
     {
-        userData = await getUserData(idToken);
+        userData = await retrieveUserData(id);
     }
     catch (error)
     {
@@ -16,56 +17,24 @@ export const isAdmin = async (req, res, next) =>
         return res.status(400).send({ message: error });
     }
 
+    if(isAdmin(userData))
+        next();
 
-    if (userData.tipo_usuario !== 'A')
-        return res.status(403).send({ message: 'Forbidden. Acesso negado.' });
+    return res.status(403).send({ message: 'Forbidden. Acesso negado.' });
+}
 
-    req.admin = userData;
-    next();
+
+export const isAdmin = (userData) =>
+{
+    return userData.tipo_usuario === 'A';
 };
 
-export const isCliente = async (req, res, next) =>
+export const isCliente = (userData) =>
 {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
-    if (!idToken)
-        return res.status(401).send({ message: 'Unauthorized. Nenhum token fornecido.' });
-
-    let userData;
-    try
-    {
-        userData = await getUserData(idToken);
-    }
-    catch (error)
-    {
-        return res.status(400).send({ message: error });
-    }
-
-    if (userData.tipo_usuario !== 'C')
-        return res.status(403).send({ message: 'Forbidden. Acesso negado.' });
-
-    req.cliente = userData;
-    next();
+    return userData.tipo_usuario === 'C';
 };
 
-export const isFuncionario = async (req, res, next) =>
+export const isFuncionario = (userData) =>
 {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
-    if (!idToken)
-        return res.status(401).send({ message: 'Unauthorized. Nenhum token fornecido.' });
-
-    let userData;
-    try
-    {
-        userData = await getUserData(idToken);
-    }
-    catch (error)
-    {
-        return res.status(400).send({ message: error });
-    }
-
-    if (userData.tipo_usuario !== 'F')
-        return res.status(403).send({ message: 'Forbidden. Acesso negado.' });
-
-    req.funcionario = userData;
-    next();
+    return userData.tipo_usuario === 'C';
 };
