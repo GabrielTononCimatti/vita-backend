@@ -7,10 +7,11 @@ import { dirname } from 'path';
 
 //import de rotas
 import authenticationRoutes from './src/routes/authenticationRoutes.js';
-//import documentRoutes from './src/routes/documentRoutes.js';
+import documentRoutes from './src/routes/documentRoutes.js';
+import notificationRoutes from "./src/routes/notificationRoutes.js";
 import personRoutes from './src/routes/personRoutes.js';
-//import projectRoutes from './src/routes/projectRoutes.js';
-//import stageRoutes from './src/routes/stageRoutes.js';
+import projectRoutes from './src/routes/projectRoutes.js';
+import stageRoutes from './src/routes/stageRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 
 
@@ -25,11 +26,11 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/authentication', authenticationRoutes);
-//server.use('/document', documentRoutes);
-//server.use('/notification', notificationRoutes);
+server.use('/document', documentRoutes);
+server.use('/notification', notificationRoutes);
 server.use('/person', personRoutes);
-//server.use('/project', projectRoutes);
-//server.use('/stage', stageRoutes);
+server.use('/project', projectRoutes);
+server.use('/stage', stageRoutes);
 server.use('/user', userRoutes);
 
 
