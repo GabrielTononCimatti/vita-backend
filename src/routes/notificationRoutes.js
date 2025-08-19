@@ -5,20 +5,20 @@ import {checkPermission} from "../middleware/authenticationMiddleware.js";
 const router = express.Router();
 
 //GET
-router.get('/', getNotification);
-router.get('/:id', getNotificationById);
+router.get('/', checkPermission, getNotification);
+router.get('/:id', checkPermission, getNotificationById);
 
 //POST
-router.post('/',postNotification);
+router.post('/', checkPermission,postNotification);
 
 //PUT
-router.put('/:id', putNotification);
+router.put('/:id', checkPermission, putNotification);
 
 //PATCH
-router.patch('/:id', patchNotification);
+router.patch('/:id', checkPermission, patchNotification);
 
 //DELETE
-router.delete('/', deleteNotification);
-router.delete('/:id', deleteNotificationById);
+router.delete('/', checkPermission, deleteNotification);
+router.delete('/:id', checkPermission, deleteNotificationById);
 
 export default router;

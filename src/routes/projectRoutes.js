@@ -5,21 +5,21 @@ import {checkPermission} from "../middleware/authenticationMiddleware.js";
 const router = express.Router();
 
 //GET
-router.get('/', getProject);
-router.get('/:id', getProjectById);
+router.get('/', checkPermission, getProject);
+router.get('/:id', checkPermission, getProjectById);
 
 //POST
-router.post('/',postProject);
+router.post('/', checkPermission,postProject);
 
 //PUT
-router.put('/:id', putProject);
+router.put('/:id', checkPermission, putProject);
 
 //PATCH
-router.patch('/:id', patchProject);
+router.patch('/:id', checkPermission, patchProject);
 
 //DELETE
-router.delete('/', deleteProject);
-router.delete('/:id', deleteProjectById);
+router.delete('/', checkPermission, deleteProject);
+router.delete('/:id', checkPermission, deleteProjectById);
 
 
 export default router;
