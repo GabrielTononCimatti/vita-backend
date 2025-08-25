@@ -45,4 +45,17 @@ export const saveUser = async (user) =>
     {
         throw error;
     }
+export const editUser = async (user) =>
+{
+    try
+    {
+        let oldUser = await retrieveUserById(user.id);
+        let {id, ...newUser} = {...oldUser, ...user};
+        validateUser(newUser);
+        await db.collection('users').doc(id).set(newUser);
+    }
+    catch(error)
+    {
+        throw error;
+    }
 }
