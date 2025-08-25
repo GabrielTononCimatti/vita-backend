@@ -56,6 +56,21 @@ export const savePerson = async (person) =>
     }
     catch(error)
     {
+        throw new Error(error.message, {cause: 400});
+    }
+}
+
+export const editPerson = async (person) =>
+{
+    try
+    {
+        let oldPerson = await retrievePersonById(person.id);
+        let {id, ...newPerson} = {...oldPerson, ...person};
+        validatePerson(newPerson);
+        await db.collection('persons').doc(id).set(newPerson);
+    }
+    catch(error)
+    {
         throw error;
     }
 }
