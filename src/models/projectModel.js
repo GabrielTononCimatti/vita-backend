@@ -39,3 +39,18 @@ export const saveProject = async (project) =>
         throw error;
     }
 }
+
+export const editProject = async (project) =>
+{
+    try
+    {
+        let oldProject = await retrieveProjectById(project.id);
+        let {id, ...newProject} = {...oldProject, ...project};
+        validateProject(newProject);
+        await db.collection('projects').doc(id).set(newProject);
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
