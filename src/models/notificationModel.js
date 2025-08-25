@@ -39,3 +39,18 @@ export const saveNotification = async (notification) =>
         throw error;
     }
 }
+
+export const editNotification = async (notification) =>
+{
+    try
+    {
+        let oldNotification = await retrieveNotificationById(notification.id);
+        let {id, ...newNotification} = {...oldNotification, ...notification};
+        validateNotification(newNotification);
+        await db.collection('notifications').doc(id).set(newNotification);
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
