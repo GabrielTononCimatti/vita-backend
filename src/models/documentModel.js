@@ -58,3 +58,18 @@ export const saveDocument = async (document) =>
         throw error;
     }
 }
+
+export const editDocument = async (document) =>
+{
+    try
+    {
+        let oldDocument = await retrieveDocumentById(document.id);
+        let {id, ...newDocument} = {...oldDocument, ...document};
+        validateDocument(newDocument);
+        await db.collection('documents').doc(id).set(newDocument);
+    }
+    catch(error)
+    {
+        throw error;
+    }
+}
